@@ -4,7 +4,11 @@ from urllib.error import HTTPError, URLError
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 
-KAKAO_REST_API_KEY = st.secrets["KAKAO_REST_API_KEY"]
+try:
+    KAKAO_REST_API_KEY = st.secrets["KAKAO_REST_API_KEY"]
+except (KeyError, FileNotFoundError):
+    st.error("앱 설정의 Secrets에 KAKAO_REST_API_KEY를 등록해 주세요.")
+    st.stop()
 
 
 def kakao(base, path, params):
